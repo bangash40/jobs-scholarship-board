@@ -7,6 +7,7 @@ items are written to pending.json for review and never reach users directly.
 from __future__ import annotations
 
 import re
+from urllib.parse import urlparse
 from datetime import date, datetime, time, timedelta, timezone
 
 PKT = timezone(timedelta(hours=5))  # Pakistan Standard Time
@@ -15,9 +16,13 @@ REQUIRED = ("id", "type", "title", "organization", "sourceUrl", "lastDate")
 
 # Scam patterns: a listing containing any of these is rejected outright.
 SCAM_PATTERNS = [
-    r"easypaisa", r"jazz\s*cash", r"western\s*union", r"send\s+money",
-    r"advance\s+fee", r"processing\s+fee", r"registration\s+fee\s+to\s+(?:be\s+)?(?:sent|paid)",
+    r"western\s*union", r"send\s+money", r"advance\s+fee", r"processing\s+fee",
+    r"registration\s+fee\s+to\s+(?:be\s+)?(?:sent|paid)",
 ]
+# Mobile-wallet names are a scam signal on unofficial sources, but official
+# government adverts (e.g. PPSC) list them as legitimate fee channels. So they
+# reject unless the listing's source is a .gov.pk site, where they only warn.
+WALLET_PATTERNS = [r"easy\s*paisa", r"jazz\s*cash", r"u\s*paisa"]
 # Softer signal: government tests often charge a legitimate bank-challan fee.
 FEE_WARNING = re.compile(r"\bfee\b", re.I)
 
@@ -59,6 +64,13 @@ def validate(entry: dict) -> tuple[list[str], list[str]]:
     for pat in SCAM_PATTERNS:
         if re.search(pat, text, re.I):
             errors.append(f"scam pattern: {pat}")
+    official = (urlparse(url).hostname or "").endswith(".gov.pk")
+    for pat in WALLET_PATTERNS:
+        if re.search(pat, text, re.I):
+            if official:
+                warnings.append(f"mentions a payment wallet ({pat}) - official source, confirm")
+            else:
+                errors.append(f"scam pattern: {pat}")
     if not errors and FEE_WARNING.search(text):
         warnings.append("mentions a fee - confirm it is an official challan")
     return errors, warnings

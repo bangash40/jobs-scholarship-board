@@ -44,10 +44,20 @@ def test_non_https_and_missing_fields_are_rejected():
 
 
 def test_scam_wording_is_rejected_and_plain_fee_only_warns():
-    errors, _ = validate(entry(description="Send fee via EasyPaisa to confirm"))
+    errors, _ = validate(
+        entry(description="Send fee via EasyPaisa to confirm", sourceUrl="https://jobs-now.example.com/x")
+    )
     assert errors
     errors, warnings = validate(entry(description="Fee Rs. 500 via bank challan"))
     assert not errors and warnings
+
+
+def test_wallet_names_only_warn_on_official_gov_pk_sources():
+    text = "Fee can be deposited via Jazz Cash, Easy Paisa or 1Link banks"
+    errors, warnings = validate(entry(description=text))  # default url is hec.gov.pk
+    assert not errors and any("wallet" in w for w in warnings)
+    errors, _ = validate(entry(description=text, sourceUrl="https://notgov.com/x"))
+    assert errors
 
 
 def test_duplicates_are_removed():
@@ -86,3 +96,25 @@ def test_parse_cards_reads_title_and_link():
 def test_guess_deadline_reads_date_near_phrase():
     assert guess_deadline("Apply now. Last date: 15-Nov-2026") == "15-Nov-2026"
     assert guess_deadline("no dates here") is None
+
+
+def test_curate_builds_entry_and_blocks_duplicates_and_bad_dates():
+    from curate import add_entry, make_entry
+
+    lead = {
+        "id": "hec-1",
+        "type": "scholarship",
+        "title": "HEC Need Based",
+        "organization": "HEC",
+        "sourceUrl": "https://www.hec.gov.pk/x",
+    }
+    entry = make_entry(lead, "2026-12-01", city="Lahore", education="master", field=None)
+    assert entry["city"] == "Lahore" and entry["educationLevel"] == "master"
+    assert "field" not in entry  # empty overrides are skipped
+
+    curated: list[dict] = []
+    assert add_entry(entry, curated) == []
+    assert len(curated) == 1
+    assert "already in curated.json" in add_entry(entry, curated)
+    assert add_entry(make_entry({**lead, "id": "hec-2", "sourceUrl": "https://www.hec.gov.pk/y"}, "not-a-date"), curated)
+    assert len(curated) == 1

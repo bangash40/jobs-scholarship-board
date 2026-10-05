@@ -9,10 +9,21 @@ published, after you confirm the deadline on the official page.
 ## Daily workflow
 
 1. Run the scraper (or download the `pending-review` artifact from the latest
-   GitHub Actions run) and open `public/pending.json`.
-2. For a lead worth publishing, open its `sourceUrl`, confirm the deadline and
-   eligibility, then copy it into `data/curated.json` with the fields below.
-3. Commit. The workflow rebuilds and republishes `feed.json`.
+   GitHub Actions run) and list the leads: `python curate.py --list`.
+2. For a lead worth publishing, open its official page and confirm the deadline
+   and eligibility yourself.
+3. Add it, with the deadline you confirmed:
+
+   ```
+   python curate.py hec-scholarships-5acc5832 --last-date 2026-11-30        --city Islamabad --province Federal --education master
+   ```
+
+   The entry is validated with the same rules as the build and refused if it
+   fails. Extra flags: `--title --field --description --eligibility`. You can
+   also edit `data/curated.json` by hand using the format below.
+4. Commit `data/curated.json`. The workflow rebuilds and republishes `feed.json`.
+
+Entry format:
 
 ```json
 {
@@ -37,9 +48,11 @@ published, after you confirm the deadline on the official page.
 ## Automatic checks when building
 
 - Required fields present, `sourceUrl` is `https://`, valid type and date.
-- Rejected if the text matches scam patterns (EasyPaisa/JazzCash, "send money",
-  "processing fee", ...). A plain mention of "fee" only warns, since official
-  tests can charge a bank-challan fee.
+- Rejected if the text matches scam patterns ("send money", "advance fee",
+  "processing fee", Western Union, ...). Mobile-wallet names (EasyPaisa,
+  JazzCash) are rejected too, except on `.gov.pk` sources where they only warn,
+  because official adverts such as PPSC's list them as fee channels. A plain
+  mention of "fee" only warns, since official tests can charge a bank-challan fee.
 - Expired listings are dropped (the day after the last date).
 - Duplicates (same title + organization) are dropped.
 
