@@ -229,4 +229,44 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get reasonOther => 'کوئی اور وجہ';
+
+  @override
+  String get onboardTitle => 'اپنی فیڈ اپنی پسند کے مطابق بنائیں';
+
+  @override
+  String get onboardSubtitle =>
+      'اختیاری۔ وہ چنیں جو آپ کے لیے اہم ہے۔ آپ اسے کسی بھی وقت \"مزید\" میں بدل سکتے ہیں۔';
+
+  @override
+  String get onboardTypes => 'میں تلاش کر رہا/رہی ہوں';
+
+  @override
+  String get onboardCity => 'میرا شہر';
+
+  @override
+  String get onboardEducation => 'میری تعلیمی سطح';
+
+  @override
+  String get onboardContinue => 'جاری رکھیں';
+
+  @override
+  String get onboardSkip => 'ابھی چھوڑ دیں';
+
+  @override
+  String get forYou => 'آپ کے لیے';
+
+  @override
+  String get moreInterests => 'میری پسند';
+
+  @override
+  String get eduMatric => 'میٹرک';
+
+  @override
+  String get eduInter => 'انٹرمیڈیٹ';
+
+  @override
+  String get eduBachelor => 'بیچلرز';
+
+  @override
+  String get eduMaster => 'ماسٹرز';
 }

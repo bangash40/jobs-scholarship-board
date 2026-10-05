@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../l10n/l10n_helpers.dart';
 import '../services/locale_controller.dart';
+import '../services/preferences_controller.dart';
+import 'onboarding_screen.dart';
 import '../theme/app_theme.dart';
 
 /// Language switch, scam-safety tips and about.
 class MoreScreen extends StatelessWidget {
-  const MoreScreen({super.key, required this.locale});
+  const MoreScreen({super.key, required this.locale, required this.prefs});
 
   final LocaleController locale;
+  final PreferencesController prefs;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +56,20 @@ class MoreScreen extends StatelessWidget {
                       ),
                       onPressed: locale.toggle,
                       child: Text(l.languageToggle),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Card(
+                  child: ListTile(
+                    leading: const Icon(Icons.tune),
+                    title: Text(l.moreInterests),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) =>
+                            OnboardingScreen(prefs: prefs, editing: true),
+                      ),
                     ),
                   ),
                 ),

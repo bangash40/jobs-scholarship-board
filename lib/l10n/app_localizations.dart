@@ -462,6 +462,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something else'**
   String get reasonOther;
+
+  /// No description provided for @onboardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Personalise your feed'**
+  String get onboardTitle;
+
+  /// No description provided for @onboardSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional. Pick what matters to you. You can change this anytime in More.'**
+  String get onboardSubtitle;
+
+  /// No description provided for @onboardTypes.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m looking for'**
+  String get onboardTypes;
+
+  /// No description provided for @onboardCity.
+  ///
+  /// In en, this message translates to:
+  /// **'My city'**
+  String get onboardCity;
+
+  /// No description provided for @onboardEducation.
+  ///
+  /// In en, this message translates to:
+  /// **'My education level'**
+  String get onboardEducation;
+
+  /// No description provided for @onboardContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get onboardContinue;
+
+  /// No description provided for @onboardSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip for now'**
+  String get onboardSkip;
+
+  /// No description provided for @forYou.
+  ///
+  /// In en, this message translates to:
+  /// **'For you'**
+  String get forYou;
+
+  /// No description provided for @moreInterests.
+  ///
+  /// In en, this message translates to:
+  /// **'My interests'**
+  String get moreInterests;
+
+  /// No description provided for @eduMatric.
+  ///
+  /// In en, this message translates to:
+  /// **'Matric'**
+  String get eduMatric;
+
+  /// No description provided for @eduInter.
+  ///
+  /// In en, this message translates to:
+  /// **'Intermediate'**
+  String get eduInter;
+
+  /// No description provided for @eduBachelor.
+  ///
+  /// In en, this message translates to:
+  /// **'Bachelor\'s'**
+  String get eduBachelor;
+
+  /// No description provided for @eduMaster.
+  ///
+  /// In en, this message translates to:
+  /// **'Master\'s'**
+  String get eduMaster;
 }
 
 class _AppLocalizationsDelegate

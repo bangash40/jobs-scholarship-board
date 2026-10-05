@@ -3,8 +3,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'l10n/app_localizations.dart';
 import 'screens/home_shell.dart';
+import 'screens/onboarding_screen.dart';
 import 'services/feed_repository.dart';
 import 'services/locale_controller.dart';
+import 'services/preferences_controller.dart';
 import 'services/reminder_service.dart';
 import 'services/saved_controller.dart';
 import 'theme/app_theme.dart';
@@ -19,7 +21,11 @@ Future<void> main() async {
   await saved.init();
   final locale = LocaleController(reminders);
   await locale.init();
-  runApp(MainApp(repository: repository, saved: saved, locale: locale));
+  final prefs = PreferencesController();
+  await prefs.init();
+  runApp(
+    MainApp(repository: repository, saved: saved, locale: locale, prefs: prefs),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -28,11 +34,13 @@ class MainApp extends StatelessWidget {
     required this.repository,
     required this.saved,
     required this.locale,
+    required this.prefs,
   });
 
   final FeedRepository repository;
   final SavedController saved;
   final LocaleController locale;
+  final PreferencesController prefs;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +58,17 @@ class MainApp extends StatelessWidget {
         ],
         theme: AppTheme.light(),
         darkTheme: AppTheme.dark(),
-        home: HomeShell(repository: repository, saved: saved, locale: locale),
+        home: ListenableBuilder(
+          listenable: prefs,
+          builder: (_, _) => prefs.onboarded
+              ? HomeShell(
+                  repository: repository,
+                  saved: saved,
+                  locale: locale,
+                  prefs: prefs,
+                )
+              : OnboardingScreen(prefs: prefs),
+        ),
       ),
     );
   }

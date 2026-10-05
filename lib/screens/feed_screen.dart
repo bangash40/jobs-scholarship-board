@@ -5,6 +5,7 @@ import '../l10n/l10n_helpers.dart';
 import '../models/listing.dart';
 import '../services/feed_repository.dart';
 import '../services/locale_controller.dart';
+import '../services/preferences_controller.dart';
 import '../services/saved_controller.dart';
 import '../theme/app_theme.dart';
 import '../widgets/filter_sheet.dart';
@@ -17,11 +18,13 @@ class FeedScreen extends StatefulWidget {
     required this.repository,
     required this.saved,
     required this.locale,
+    required this.prefs,
   });
 
   final FeedRepository repository;
   final SavedController saved;
   final LocaleController locale;
+  final PreferencesController prefs;
 
   @override
   State<FeedScreen> createState() => _FeedScreenState();
@@ -36,6 +39,7 @@ class _FeedScreenState extends State<FeedScreen> {
   ListingType? _type;
   bool _closingSoon = false;
   FeedFilters _filters = FeedFilters.none;
+  late bool _forYou = widget.prefs.hasInterests;
   String _query = '';
 
   @override
@@ -70,6 +74,7 @@ class _FeedScreenState extends State<FeedScreen> {
       if (_type != null && l.type != _type) return false;
       if (_closingSoon && l.daysLeft(now) > _closingSoonDays) return false;
       if (!_filters.matches(l)) return false;
+      if (_forYou && !widget.prefs.matches(l)) return false;
       if (q.isNotEmpty &&
           !l.title.toLowerCase().contains(q) &&
           !l.organization.toLowerCase().contains(q)) {
@@ -110,6 +115,15 @@ class _FeedScreenState extends State<FeedScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               children: [
                 _filterButton(l.filtersTitle),
+                if (widget.prefs.hasInterests)
+                  _chip(
+                    l.forYou,
+                    null,
+                    _forYou,
+                    () => setState(() => _forYou = !_forYou),
+                    icon: Icons.auto_awesome,
+                    color: AppColors.accent,
+                  ),
                 _chip(l.filterAll, null, _type == null, () => setState(() => _type = null)),
                 for (final t in ListingType.values)
                   _chip(t.label(l), t, _type == t, () => setState(() => _type = t)),

@@ -92,6 +92,7 @@ class _FilterSheetState extends State<_FilterSheet> {
               _options(widget.listings, (x) => x.educationLevel),
               _education,
               (v) => setState(() => _education = v),
+              label: (v) => educationLabel(l, v),
             ),
             _group(
               l.field,
@@ -120,8 +121,9 @@ class _FilterSheetState extends State<_FilterSheet> {
     String title,
     List<String> options,
     String? selected,
-    ValueChanged<String?> onChanged,
-  ) {
+    ValueChanged<String?> onChanged, {
+    String Function(String)? label,
+  }) {
     if (options.isEmpty) return const SizedBox.shrink();
     return Padding(
       padding: const EdgeInsets.only(top: 12),
@@ -141,7 +143,7 @@ class _FilterSheetState extends State<_FilterSheet> {
               ),
               for (final o in options)
                 ChoiceChip(
-                  label: Text(o),
+                  label: Text(label?.call(o) ?? o),
                   selected: selected == o,
                   onSelected: (_) => onChanged(o),
                 ),

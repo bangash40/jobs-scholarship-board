@@ -110,5 +110,18 @@
   "reasonFake": "Looks fake or a scam",
   "reasonExpired": "Deadline is wrong or expired",
   "reasonLink": "Link is broken or wrong",
-  "reasonOther": "Something else"
+  "reasonOther": "Something else",
+  "onboardTitle": "Personalise your feed",
+  "onboardSubtitle": "Optional. Pick what matters to you. You can change this anytime in More.",
+  "onboardTypes": "I'm looking for",
+  "onboardCity": "My city",
+  "onboardEducation": "My education level",
+  "onboardContinue": "Continue",
+  "onboardSkip": "Skip for now",
+  "forYou": "For you",
+  "moreInterests": "My interests",
+  "eduMatric": "Matric",
+  "eduInter": "Intermediate",
+  "eduBachelor": "Bachelor's",
+  "eduMaster": "Master's"
 }

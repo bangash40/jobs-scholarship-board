@@ -59,5 +59,18 @@
   "reasonFake": "جعلی یا فراڈ لگتا ہے",
   "reasonExpired": "آخری تاریخ غلط یا گزر چکی ہے",
   "reasonLink": "لنک خراب یا غلط ہے",
-  "reasonOther": "کوئی اور وجہ"
+  "reasonOther": "کوئی اور وجہ",
+  "onboardTitle": "اپنی فیڈ اپنی پسند کے مطابق بنائیں",
+  "onboardSubtitle": "اختیاری۔ وہ چنیں جو آپ کے لیے اہم ہے۔ آپ اسے کسی بھی وقت \"مزید\" میں بدل سکتے ہیں۔",
+  "onboardTypes": "میں تلاش کر رہا/رہی ہوں",
+  "onboardCity": "میرا شہر",
+  "onboardEducation": "میری تعلیمی سطح",
+  "onboardContinue": "جاری رکھیں",
+  "onboardSkip": "ابھی چھوڑ دیں",
+  "forYou": "آپ کے لیے",
+  "moreInterests": "میری پسند",
+  "eduMatric": "میٹرک",
+  "eduInter": "انٹرمیڈیٹ",
+  "eduBachelor": "بیچلرز",
+  "eduMaster": "ماسٹرز"
 }

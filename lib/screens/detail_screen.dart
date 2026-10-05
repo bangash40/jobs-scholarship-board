@@ -233,7 +233,7 @@ class DetailScreen extends StatelessWidget {
                 _Section(
                   Icons.school_outlined,
                   context.l10n.educationLevel,
-                  listing.educationLevel,
+                  educationLabel(context.l10n, listing.educationLevel),
                 ),
                 _Section(
                   Icons.rule,

@@ -20,3 +20,12 @@ extension L10nContext on BuildContext {
   String formatDate(DateTime date, DateFormat Function(String locale) fmt) =>
       fmt(Localizations.localeOf(this).toString()).format(date);
 }
+
+/// Readable name for an `educationLevel` feed value; unknown values pass through.
+String educationLabel(AppLocalizations l, String value) => switch (value) {
+  'matric' => l.eduMatric,
+  'inter' => l.eduInter,
+  'bachelor' => l.eduBachelor,
+  'master' => l.eduMaster,
+  _ => value,
+};

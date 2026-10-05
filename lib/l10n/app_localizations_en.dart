@@ -225,4 +225,44 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reasonOther => 'Something else';
+
+  @override
+  String get onboardTitle => 'Personalise your feed';
+
+  @override
+  String get onboardSubtitle =>
+      'Optional. Pick what matters to you. You can change this anytime in More.';
+
+  @override
+  String get onboardTypes => 'I\'m looking for';
+
+  @override
+  String get onboardCity => 'My city';
+
+  @override
+  String get onboardEducation => 'My education level';
+
+  @override
+  String get onboardContinue => 'Continue';
+
+  @override
+  String get onboardSkip => 'Skip for now';
+
+  @override
+  String get forYou => 'For you';
+
+  @override
+  String get moreInterests => 'My interests';
+
+  @override
+  String get eduMatric => 'Matric';
+
+  @override
+  String get eduInter => 'Intermediate';
+
+  @override
+  String get eduBachelor => 'Bachelor\'s';
+
+  @override
+  String get eduMaster => 'Master\'s';
 }

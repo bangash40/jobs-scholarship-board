@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/l10n_helpers.dart';
 import '../services/feed_repository.dart';
 import '../services/locale_controller.dart';
+import '../services/preferences_controller.dart';
 import '../services/saved_controller.dart';
 import 'feed_screen.dart';
 import 'more_screen.dart';
@@ -15,11 +16,13 @@ class HomeShell extends StatefulWidget {
     required this.repository,
     required this.saved,
     required this.locale,
+    required this.prefs,
   });
 
   final FeedRepository repository;
   final SavedController saved;
   final LocaleController locale;
+  final PreferencesController prefs;
 
   @override
   State<HomeShell> createState() => _HomeShellState();
@@ -56,9 +59,10 @@ class _HomeShellState extends State<HomeShell> {
             repository: widget.repository,
             saved: widget.saved,
             locale: widget.locale,
+            prefs: widget.prefs,
           ),
           SavedScreen(repository: widget.repository, saved: widget.saved),
-          MoreScreen(locale: widget.locale),
+          MoreScreen(locale: widget.locale, prefs: widget.prefs),
         ],
       ),
       bottomNavigationBar: ListenableBuilder(
