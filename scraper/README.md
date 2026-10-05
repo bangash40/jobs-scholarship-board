@@ -15,7 +15,7 @@ published, after you confirm the deadline on the official page.
 3. Add it, with the deadline you confirmed:
 
    ```
-   python curate.py hec-scholarships-5acc5832 --last-date 2026-11-30        --city Islamabad --province Federal --education master
+   python curate.py hec-scholarships-5acc5832 --last-date 2026-11-30 --city Islamabad --province Federal --education master
    ```
 
    The entry is validated with the same rules as the build and refused if it
