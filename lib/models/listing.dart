@@ -1,12 +1,11 @@
 enum ListingType {
-  govtJob('govt_job', 'Govt job'),
-  privateJob('private_job', 'Private job'),
-  scholarship('scholarship', 'Scholarship'),
-  internship('internship', 'Internship');
+  govtJob('govt_job'),
+  privateJob('private_job'),
+  scholarship('scholarship'),
+  internship('internship');
 
-  const ListingType(this.key, this.label);
+  const ListingType(this.key);
   final String key;
-  final String label;
 
   static ListingType fromKey(String key) => ListingType.values.firstWhere(
     (t) => t.key == key,

@@ -1,0 +1,151 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Urdu (`ur`).
+class AppLocalizationsUr extends AppLocalizations {
+  AppLocalizationsUr([String locale = 'ur']) : super(locale);
+
+  @override
+  String get appTitle => 'نوکریاں اور وظائف';
+
+  @override
+  String get headerTitle => 'تصدیق شدہ مواقع';
+
+  @override
+  String openNow(int count) {
+    return '$count کھلے ہیں · نوکریاں، وظائف اور انٹرن شپس';
+  }
+
+  @override
+  String get searchHint => 'عنوان یا ادارہ تلاش کریں';
+
+  @override
+  String get filterAll => 'سب';
+
+  @override
+  String get filterClosingSoon => 'جلد بند ہونے والے';
+
+  @override
+  String get typeGovtJob => 'سرکاری نوکری';
+
+  @override
+  String get typePrivateJob => 'نجی نوکری';
+
+  @override
+  String get typeScholarship => 'وظیفہ';
+
+  @override
+  String get typeInternship => 'انٹرن شپ';
+
+  @override
+  String get noListings => 'کوئی اندراج نہیں ملا۔';
+
+  @override
+  String get loadError =>
+      'فہرست لوڈ نہیں ہو سکی۔ دوبارہ کوشش کے لیے نیچے کھینچیں۔';
+
+  @override
+  String get offlineNotice =>
+      'آف لائن — آخری محفوظ شدہ فہرست دکھائی جا رہی ہے۔';
+
+  @override
+  String lastUpdated(String date) {
+    return 'آخری تازہ کاری $date';
+  }
+
+  @override
+  String get navFeed => 'فیڈ';
+
+  @override
+  String get navMyDeadlines => 'میری آخری تاریخیں';
+
+  @override
+  String get savedSubtitle =>
+      'محفوظ کردہ اندراجات، قریب ترین آخری تاریخ پہلے۔ بند ہونے سے 7، 2 اور 1 دن پہلے یاد دہانی کے لیے کسی اندراج پر گھنٹی دبائیں۔';
+
+  @override
+  String get savedEmpty =>
+      'ابھی کچھ محفوظ نہیں۔\nآخری تاریخ پر نظر رکھنے کے لیے کسی اندراج پر بک مارک دبائیں۔';
+
+  @override
+  String get verified => 'تصدیق شدہ';
+
+  @override
+  String daysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count دن باقی',
+      one: '1 دن باقی',
+      zero: 'آج بند ہو رہا ہے',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get lastDateToApply => 'درخواست کی آخری تاریخ';
+
+  @override
+  String get location => 'مقام';
+
+  @override
+  String get field => 'شعبہ';
+
+  @override
+  String get educationLevel => 'تعلیمی سطح';
+
+  @override
+  String get eligibility => 'اہلیت';
+
+  @override
+  String get description => 'تفصیل';
+
+  @override
+  String get openOfficialSource => 'سرکاری ذریعہ کھولیں';
+
+  @override
+  String get noFeesNotice =>
+      'ہم کبھی فیس نہیں لیتے۔ درخواست دینے کے لیے کسی کو رقم ادا نہ کریں۔';
+
+  @override
+  String get couldNotOpenLink => 'لنک نہیں کھل سکا';
+
+  @override
+  String get tooltipReminders => 'آخری تاریخ کی یاد دہانی';
+
+  @override
+  String get tooltipSave => 'محفوظ کریں';
+
+  @override
+  String get remindersOff => 'یاد دہانیاں بند کر دی گئیں';
+
+  @override
+  String remindersSet(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count یاد دہانیاں مقرر (صبح 9:00)',
+      one: '1 یاد دہانی مقرر (صبح 9:00)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get remindersNone =>
+      'کوئی یاد دہانی مقرر نہیں ہو سکی — آخری تاریخ بہت قریب ہے';
+
+  @override
+  String get languageToggle => 'English';
+
+  @override
+  String notifClosingIn(int days) {
+    return '$days دن میں بند ہو رہا ہے';
+  }
+
+  @override
+  String get notifLastDay => 'کل آخری دن ہے';
+}
