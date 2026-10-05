@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n_helpers.dart';
 import '../services/feed_repository.dart';
+import '../services/locale_controller.dart';
 import '../services/saved_controller.dart';
 import 'feed_screen.dart';
 import 'saved_screen.dart';
 
 /// Bottom navigation: Feed and My deadlines.
 class HomeShell extends StatefulWidget {
-  const HomeShell({super.key, required this.repository, required this.saved});
+  const HomeShell({
+    super.key,
+    required this.repository,
+    required this.saved,
+    required this.locale,
+  });
 
   final FeedRepository repository;
   final SavedController saved;
+  final LocaleController locale;
 
   @override
   State<HomeShell> createState() => _HomeShellState();
@@ -43,7 +51,11 @@ class _HomeShellState extends State<HomeShell> {
       body: IndexedStack(
         index: _index,
         children: [
-          FeedScreen(repository: widget.repository, saved: widget.saved),
+          FeedScreen(
+            repository: widget.repository,
+            saved: widget.saved,
+            locale: widget.locale,
+          ),
           SavedScreen(repository: widget.repository, saved: widget.saved),
         ],
       ),
@@ -53,10 +65,10 @@ class _HomeShellState extends State<HomeShell> {
           selectedIndex: _index,
           onDestinationSelected: (i) => setState(() => _index = i),
           destinations: [
-            const NavigationDestination(
-              icon: Icon(Icons.explore_outlined),
-              selectedIcon: Icon(Icons.explore),
-              label: 'Feed',
+            NavigationDestination(
+              icon: const Icon(Icons.explore_outlined),
+              selectedIcon: const Icon(Icons.explore),
+              label: context.l10n.navFeed,
             ),
             NavigationDestination(
               icon: Badge(
@@ -65,7 +77,7 @@ class _HomeShellState extends State<HomeShell> {
                 child: const Icon(Icons.bookmark_border),
               ),
               selectedIcon: const Icon(Icons.bookmark),
-              label: 'My deadlines',
+              label: context.l10n.navMyDeadlines,
             ),
           ],
         ),

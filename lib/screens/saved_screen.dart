@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n_helpers.dart';
 import '../models/listing.dart';
 import '../services/feed_repository.dart';
 import '../services/saved_controller.dart';
@@ -32,9 +33,9 @@ class SavedScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'My deadlines',
-                      style: TextStyle(
+                    Text(
+                      context.l10n.navMyDeadlines,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 22,
                         fontWeight: FontWeight.w800,
@@ -42,8 +43,7 @@ class SavedScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'Saved listings, soonest first. Tap the bell on a '
-                      'listing to get alerts 7, 2 and 1 days before it closes.',
+                      context.l10n.savedSubtitle,
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.8),
                       ),
@@ -65,23 +65,22 @@ class SavedScreen extends StatelessWidget {
                     .toList()
                   ..sort((a, b) => a.lastDate.compareTo(b.lastDate));
                 if (items.isEmpty) {
-                  return const Center(
+                  return Center(
                     child: Padding(
-                      padding: EdgeInsets.all(32),
+                      padding: const EdgeInsets.all(32),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.bookmark_add_outlined,
                             size: 48,
                             color: AppColors.muted,
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
-                            'Nothing saved yet.\nTap the bookmark on any '
-                            'listing to track its deadline.',
+                            context.l10n.savedEmpty,
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: AppColors.muted),
+                            style: const TextStyle(color: AppColors.muted),
                           ),
                         ],
                       ),

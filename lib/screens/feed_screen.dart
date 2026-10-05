@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../l10n/l10n_helpers.dart';
 import '../models/listing.dart';
 import '../services/feed_repository.dart';
+import '../services/locale_controller.dart';
 import '../services/saved_controller.dart';
 import '../theme/app_theme.dart';
 import '../widgets/listing_card.dart';
 import 'detail_screen.dart';
 
 class FeedScreen extends StatefulWidget {
-  const FeedScreen({super.key, required this.repository, required this.saved});
+  const FeedScreen({
+    super.key,
+    required this.repository,
+    required this.saved,
+    required this.locale,
+  });
 
   final FeedRepository repository;
   final SavedController saved;
+  final LocaleController locale;
 
   @override
   State<FeedScreen> createState() => _FeedScreenState();
@@ -23,7 +31,7 @@ class _FeedScreenState extends State<FeedScreen> {
 
   Feed? _feed;
   bool _loading = true;
-  String? _error;
+  bool _failed = false;
   ListingType? _type;
   bool _closingSoon = false;
   String _query = '';
@@ -38,7 +46,7 @@ class _FeedScreenState extends State<FeedScreen> {
   Future<void> _refresh() async {
     setState(() {
       _loading = true;
-      _error = null;
+      _failed = false;
     });
     try {
       final feed = await widget.repository.refresh();
@@ -46,9 +54,7 @@ class _FeedScreenState extends State<FeedScreen> {
       setState(() => _feed = feed);
     } catch (e) {
       if (!mounted) return;
-      setState(() => _error = _feed == null
-          ? 'Could not load listings. Pull down to retry.'
-          : 'Offline — showing last synced listings.');
+      setState(() => _failed = true);
     } finally {
       if (mounted) setState(() => _loading = false);
     }
@@ -82,6 +88,7 @@ class _FeedScreenState extends State<FeedScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     final items = _visible;
     final updated = _feed?.updatedAt;
     return Scaffold(
@@ -91,6 +98,7 @@ class _FeedScreenState extends State<FeedScreen> {
             openCount: _openCount,
             loading: _loading,
             onQuery: (v) => setState(() => _query = v),
+            onToggleLanguage: widget.locale.toggle,
           ),
           SizedBox(
             height: 56,
@@ -98,11 +106,11 @@ class _FeedScreenState extends State<FeedScreen> {
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 16),
               children: [
-                _chip('All', null, _type == null, () => setState(() => _type = null)),
+                _chip(l.filterAll, null, _type == null, () => setState(() => _type = null)),
                 for (final t in ListingType.values)
-                  _chip(t.label, t, _type == t, () => setState(() => _type = t)),
+                  _chip(t.label(l), t, _type == t, () => setState(() => _type = t)),
                 _chip(
-                  'Closing soon',
+                  l.filterClosingSoon,
                   null,
                   _closingSoon,
                   () => setState(() => _closingSoon = !_closingSoon),
@@ -112,7 +120,7 @@ class _FeedScreenState extends State<FeedScreen> {
               ],
             ),
           ),
-          if (_error != null)
+          if (_failed)
             Container(
               width: double.infinity,
               margin: const EdgeInsets.fromLTRB(16, 0, 16, 4),
@@ -122,7 +130,7 @@ class _FeedScreenState extends State<FeedScreen> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Text(
-                _error!,
+                _feed == null ? l.loadError : l.offlineNotice,
                 style: const TextStyle(
                   color: AppColors.soon,
                   fontWeight: FontWeight.w600,
@@ -144,7 +152,7 @@ class _FeedScreenState extends State<FeedScreen> {
                         const SizedBox(height: 8),
                         Center(
                           child: Text(
-                            _loading ? '' : 'No listings match.',
+                            _loading ? '' : l.noListings,
                             style: const TextStyle(color: AppColors.muted),
                           ),
                         ),
@@ -174,7 +182,9 @@ class _FeedScreenState extends State<FeedScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(6),
                 child: Text(
-                  'Last updated ${DateFormat.yMMMd().add_jm().format(updated)}',
+                  l.lastUpdated(
+                    context.formatDate(updated, (loc) => DateFormat.yMMMd(loc).add_Hm()),
+                  ),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: AppColors.muted,
                   ),
@@ -225,14 +235,17 @@ class _Header extends StatelessWidget {
     required this.openCount,
     required this.loading,
     required this.onQuery,
+    required this.onToggleLanguage,
   });
 
   final int openCount;
   final bool loading;
   final ValueChanged<String> onQuery;
+  final VoidCallback onToggleLanguage;
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Container(
       decoration: const BoxDecoration(
         gradient: AppColors.headerGradient,
@@ -259,10 +272,10 @@ class _Header extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  const Expanded(
+                  Expanded(
                     child: Text(
-                      'Verified Opportunities',
-                      style: TextStyle(
+                      l.headerTitle,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 22,
                         fontWeight: FontWeight.w800,
@@ -279,18 +292,31 @@ class _Header extends StatelessWidget {
                         color: Colors.white,
                       ),
                     ),
+                  TextButton(
+                    onPressed: onToggleLanguage,
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.white.withValues(alpha: 0.15),
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      minimumSize: const Size(0, 34),
+                    ),
+                    child: Text(
+                      l.languageToggle,
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 6),
               Text(
-                '$openCount open now · Jobs, scholarships & internships',
+                l.openNow(openCount),
                 style: TextStyle(color: Colors.white.withValues(alpha: 0.8)),
               ),
               const SizedBox(height: 16),
               TextField(
                 onChanged: onQuery,
                 decoration: InputDecoration(
-                  hintText: 'Search title or organization',
+                  hintText: l.searchHint,
                   prefixIcon: const Icon(Icons.search),
                   filled: true,
                   fillColor: Colors.white,

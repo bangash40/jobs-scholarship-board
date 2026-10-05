@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../l10n/l10n_helpers.dart';
 import '../models/listing.dart';
 import '../services/saved_controller.dart';
 import '../theme/app_theme.dart';
@@ -9,12 +10,6 @@ Color deadlineColor(int daysLeft) {
   if (daysLeft <= 2) return AppColors.urgent;
   if (daysLeft <= 7) return AppColors.soon;
   return AppColors.comfortable;
-}
-
-String deadlineText(int daysLeft) {
-  if (daysLeft == 0) return 'Closes today';
-  if (daysLeft == 1) return '1 day left';
-  return '$daysLeft days left';
 }
 
 /// Coloured pill, e.g. "Scholarship", tinted by listing type.
@@ -37,7 +32,7 @@ class TypeChip extends StatelessWidget {
           Icon(type.icon, size: 13, color: c),
           const SizedBox(width: 4),
           Text(
-            type.label,
+            type.label(context.l10n),
             style: TextStyle(
               color: c,
               fontSize: 12,
@@ -54,14 +49,14 @@ class VerifiedBadge extends StatelessWidget {
   const VerifiedBadge({super.key});
 
   @override
-  Widget build(BuildContext context) => const Row(
+  Widget build(BuildContext context) => Row(
     mainAxisSize: MainAxisSize.min,
     children: [
-      Icon(Icons.verified, size: 15, color: AppColors.verified),
-      SizedBox(width: 3),
+      const Icon(Icons.verified, size: 15, color: AppColors.verified),
+      const SizedBox(width: 3),
       Text(
-        'Verified',
-        style: TextStyle(
+        context.l10n.verified,
+        style: const TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w600,
           color: AppColors.verified,
@@ -90,7 +85,7 @@ class DeadlinePill extends StatelessWidget {
           Icon(Icons.timer_outlined, size: 14, color: c),
           const SizedBox(width: 4),
           Text(
-            deadlineText(daysLeft),
+            context.l10n.daysLeft(daysLeft),
             style: TextStyle(
               color: c,
               fontSize: 12,
@@ -192,7 +187,7 @@ class ListingCard extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              DateFormat.MMMd().format(listing.lastDate),
+                              context.formatDate(listing.lastDate, DateFormat.MMMd),
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: AppColors.muted,
                               ),

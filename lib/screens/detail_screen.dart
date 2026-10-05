@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../l10n/l10n_helpers.dart';
 import '../models/listing.dart';
 import '../services/saved_controller.dart';
 import '../theme/app_theme.dart';
@@ -15,13 +16,14 @@ class DetailScreen extends StatelessWidget {
 
   Future<void> _toggleReminder(BuildContext context) async {
     final messenger = ScaffoldMessenger.of(context);
+    final l = context.l10n;
     final on = !saved.hasReminder(listing.id);
     final count = await saved.setReminder(listing, on);
     final msg = !on
-        ? 'Reminders turned off'
+        ? l.remindersOff
         : count > 0
-        ? '$count reminder${count == 1 ? '' : 's'} set (9:00 am)'
-        : 'No reminders to set — the deadline is too close';
+        ? l.remindersSet(count)
+        : l.remindersNone;
     messenger.showSnackBar(SnackBar(content: Text(msg)));
   }
 
@@ -32,7 +34,7 @@ class DetailScreen extends StatelessWidget {
     );
     if (!ok && context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Could not open the link')),
+        SnackBar(content: Text(context.l10n.couldNotOpenLink)),
       );
     }
   }
@@ -57,7 +59,7 @@ class DetailScreen extends StatelessWidget {
                 builder: (_, _) => Row(
                   children: [
                     IconButton(
-                      tooltip: 'Deadline reminders',
+                      tooltip: context.l10n.tooltipReminders,
                       onPressed: () => _toggleReminder(context),
                       icon: Icon(
                         saved.hasReminder(listing.id)
@@ -66,7 +68,7 @@ class DetailScreen extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      tooltip: 'Save',
+                      tooltip: context.l10n.tooltipSave,
                       onPressed: () => saved.toggleSaved(listing),
                       icon: Icon(
                         saved.isSaved(listing.id)
@@ -108,7 +110,7 @@ class DetailScreen extends StatelessWidget {
                           Icon(listing.type.icon, size: 14, color: Colors.white),
                           const SizedBox(width: 4),
                           Text(
-                            listing.type.label,
+                            listing.type.label(context.l10n),
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 12,
@@ -157,13 +159,13 @@ class DetailScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Last date to apply',
+                              context.l10n.lastDateToApply,
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: AppColors.muted,
                               ),
                             ),
                             Text(
-                              DateFormat.yMMMMd().format(listing.lastDate),
+                              context.formatDate(listing.lastDate, DateFormat.yMMMMd),
                               style: theme.textTheme.titleMedium?.copyWith(
                                 color: color,
                               ),
@@ -184,30 +186,30 @@ class DetailScreen extends StatelessWidget {
                 const SizedBox(height: 12),
                 _Section(
                   Icons.place_outlined,
-                  'Location',
+                  context.l10n.location,
                   '${listing.city}, ${listing.province}',
                 ),
-                _Section(Icons.category_outlined, 'Field', listing.field),
+                _Section(Icons.category_outlined, context.l10n.field, listing.field),
                 _Section(
                   Icons.school_outlined,
-                  'Education level',
+                  context.l10n.educationLevel,
                   listing.educationLevel,
                 ),
                 _Section(
                   Icons.rule,
-                  'Eligibility',
+                  context.l10n.eligibility,
                   listing.eligibility,
                 ),
                 _Section(
                   Icons.description_outlined,
-                  'Description',
+                  context.l10n.description,
                   listing.description,
                 ),
                 const SizedBox(height: 8),
                 FilledButton.icon(
                   onPressed: () => _openSource(context),
                   icon: const Icon(Icons.open_in_new),
-                  label: const Text('Open official source'),
+                  label: Text(context.l10n.openOfficialSource),
                 ),
                 const SizedBox(height: 14),
                 Container(
@@ -216,18 +218,18 @@ class DetailScreen extends StatelessWidget {
                     color: AppColors.verified.withValues(alpha: 0.08),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Row(
+                  child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.shield_outlined,
                         color: AppColors.verified,
                         size: 20,
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: Text(
-                          'We never charge fees. Never pay anyone to apply.',
-                          style: TextStyle(fontSize: 13),
+                          context.l10n.noFeesNotice,
+                          style: const TextStyle(fontSize: 13),
                         ),
                       ),
                     ],
