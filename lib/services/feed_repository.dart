@@ -8,11 +8,12 @@ import 'package:http/http.dart' as http;
 import '../models/listing.dart';
 
 /// Where the scraper publishes feed.json (GitHub Pages, Firebase Hosting, ...).
-/// Leave empty to use only the bundled sample feed.
-const String kFeedUrl = '';
+/// Leave empty to use only the bundled feed (assets/feed.json).
+const String kFeedUrl =
+    'https://bangash40.github.io/jobs-scholarship-board/feed.json';
 
 /// Loads the feed: cached copy first, then network, falling back to the
-/// bundled sample so the app always has something to show.
+/// bundled snapshot so the app always has something to show.
 class FeedRepository {
   static const _boxName = 'feed_cache';
   static const _key = 'feed_json';
@@ -41,18 +42,30 @@ class FeedRepository {
 
   /// Fetches a fresh feed and caches it. Throws if it can't be loaded.
   Future<Feed> refresh() async {
-    final String raw;
-    if (kFeedUrl.isEmpty) {
-      raw = await rootBundle.loadString('assets/feed.json');
-    } else {
+    if (kFeedUrl.isEmpty) return _store(await _bundled());
+    try {
       final res = await http
           .get(Uri.parse(kFeedUrl))
           .timeout(const Duration(seconds: 15));
       if (res.statusCode != 200) {
         throw Exception('Feed request failed (${res.statusCode})');
       }
-      raw = utf8.decode(res.bodyBytes);
+      return await _store(utf8.decode(res.bodyBytes));
+    } catch (_) {
+      // Offline with a previous sync: let the caller keep showing the cache.
+      if (_box.get(_key) != null) rethrow;
+      // First launch with no connection: show the bundled snapshot, but don't
+      // cache it, so the next launch still tries the network first.
+      final feed = Feed.fromJson(jsonDecode(await _bundled()) as Map<String, dynamic>);
+      current.value = feed;
+      return feed;
     }
+  }
+
+  Future<String> _bundled() => rootBundle.loadString('assets/feed.json');
+
+  /// Parses [raw], caches it and publishes it to listeners.
+  Future<Feed> _store(String raw) async {
     final feed = Feed.fromJson(jsonDecode(raw) as Map<String, dynamic>);
     await _box.put(_key, raw);
     current.value = feed;
