@@ -1,0 +1,59 @@
+name: Build and publish feed
+
+on:
+  schedule:
+    - cron: "0 */6 * * *" # every 6 hours (UTC)
+  push:
+    branches: [main]
+    paths: ["scraper/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scraper/requirements.txt
+      - run: pip install -r scraper/requirements.txt
+      - name: Run tests
+        working-directory: scraper
+        run: python -m pytest -q
+      - name: Build feed and review queue
+        working-directory: scraper
+        run: python run.py
+      # Only the verified feed is published. Unreviewed leads stay private.
+      - name: Stage site
+        run: |
+          mkdir _site
+          cp scraper/public/feed.json _site/feed.json
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Keep the review queue as a private build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pending-review
+          path: scraper/public/pending.json
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
