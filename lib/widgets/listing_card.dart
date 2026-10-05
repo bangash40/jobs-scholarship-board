@@ -115,6 +115,8 @@ class ListingCard extends StatelessWidget {
     final theme = Theme.of(context);
     final days = listing.daysLeft(DateTime.now());
     final typeColor = listing.type.color;
+    // City if known, else the province; empty (e.g. international) hides the pin.
+    final place = listing.city.isNotEmpty ? listing.city : listing.province;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       child: Card(
@@ -171,15 +173,17 @@ class ListingCard extends StatelessWidget {
                         const SizedBox(height: 12),
                         Row(
                           children: [
-                            const Icon(
-                              Icons.place_outlined,
-                              size: 16,
-                              color: AppColors.muted,
-                            ),
-                            const SizedBox(width: 3),
+                            if (place.isNotEmpty) ...[
+                              const Icon(
+                                Icons.place_outlined,
+                                size: 16,
+                                color: AppColors.muted,
+                              ),
+                              const SizedBox(width: 3),
+                            ],
                             Expanded(
                               child: Text(
-                                listing.city,
+                                place,
                                 style: theme.textTheme.bodySmall?.copyWith(
                                   color: AppColors.muted,
                                 ),
