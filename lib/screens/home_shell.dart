@@ -1,0 +1,75 @@
+import 'package:flutter/material.dart';
+
+import '../services/feed_repository.dart';
+import '../services/saved_controller.dart';
+import 'feed_screen.dart';
+import 'saved_screen.dart';
+
+/// Bottom navigation: Feed and My deadlines.
+class HomeShell extends StatefulWidget {
+  const HomeShell({super.key, required this.repository, required this.saved});
+
+  final FeedRepository repository;
+  final SavedController saved;
+
+  @override
+  State<HomeShell> createState() => _HomeShellState();
+}
+
+class _HomeShellState extends State<HomeShell> {
+  int _index = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.repository.current.addListener(_onFeed);
+    _onFeed();
+  }
+
+  @override
+  void dispose() {
+    widget.repository.current.removeListener(_onFeed);
+    super.dispose();
+  }
+
+  void _onFeed() {
+    final feed = widget.repository.current.value;
+    if (feed != null) widget.saved.sync(feed);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: IndexedStack(
+        index: _index,
+        children: [
+          FeedScreen(repository: widget.repository, saved: widget.saved),
+          SavedScreen(repository: widget.repository, saved: widget.saved),
+        ],
+      ),
+      bottomNavigationBar: ListenableBuilder(
+        listenable: widget.saved,
+        builder: (_, _) => NavigationBar(
+          selectedIndex: _index,
+          onDestinationSelected: (i) => setState(() => _index = i),
+          destinations: [
+            const NavigationDestination(
+              icon: Icon(Icons.explore_outlined),
+              selectedIcon: Icon(Icons.explore),
+              label: 'Feed',
+            ),
+            NavigationDestination(
+              icon: Badge(
+                isLabelVisible: widget.saved.savedIds.isNotEmpty,
+                label: Text('${widget.saved.savedIds.length}'),
+                child: const Icon(Icons.bookmark_border),
+              ),
+              selectedIcon: const Icon(Icons.bookmark),
+              label: 'My deadlines',
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

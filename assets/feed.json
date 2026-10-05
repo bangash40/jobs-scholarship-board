@@ -1,0 +1,69 @@
+{
+  "updatedAt": "2026-10-05T06:00:00Z",
+  "listings": [
+    {
+      "id": "sample-1",
+      "type": "scholarship",
+      "title": "HEC Need-Based Scholarship (SAMPLE)",
+      "organization": "Higher Education Commission",
+      "city": "Islamabad",
+      "province": "Federal",
+      "field": "All disciplines",
+      "educationLevel": "bachelor",
+      "description": "Sample entry. Replace with real data from feed.json produced by the scraper.",
+      "eligibility": "Pakistani nationals enrolled in public universities with demonstrated financial need.",
+      "lastDate": "2026-10-09T23:59:00+05:00",
+      "postedAt": "2026-10-01T09:00:00Z",
+      "sourceUrl": "https://www.hec.gov.pk",
+      "verified": true
+    },
+    {
+      "id": "sample-2",
+      "type": "govt_job",
+      "title": "Assistant Director (BS-17) (SAMPLE)",
+      "organization": "Public Service Commission",
+      "city": "Lahore",
+      "province": "Punjab",
+      "field": "Administration",
+      "educationLevel": "master",
+      "description": "Sample entry for layout testing.",
+      "eligibility": "Master's degree, age 21-30.",
+      "lastDate": "2026-10-20T23:59:00+05:00",
+      "postedAt": "2026-10-03T09:00:00Z",
+      "sourceUrl": "https://www.ppsc.gop.pk",
+      "verified": true
+    },
+    {
+      "id": "sample-3",
+      "type": "internship",
+      "title": "Software Engineering Intern (SAMPLE)",
+      "organization": "Example Tech Pvt Ltd",
+      "city": "Karachi",
+      "province": "Sindh",
+      "field": "IT",
+      "educationLevel": "bachelor",
+      "description": "Sample entry for layout testing.",
+      "eligibility": "CS/SE students in final 2 semesters.",
+      "lastDate": "2026-11-15T23:59:00+05:00",
+      "postedAt": "2026-10-04T09:00:00Z",
+      "sourceUrl": "https://example.com/careers",
+      "verified": true
+    },
+    {
+      "id": "sample-4",
+      "type": "private_job",
+      "title": "Marketing Executive (SAMPLE)",
+      "organization": "Example Corp",
+      "city": "Islamabad",
+      "province": "Federal",
+      "field": "Marketing",
+      "educationLevel": "bachelor",
+      "description": "Sample entry for layout testing.",
+      "eligibility": "BBA or equivalent, 1-2 years experience.",
+      "lastDate": "2026-10-07T23:59:00+05:00",
+      "postedAt": "2026-10-02T09:00:00Z",
+      "sourceUrl": "https://example.com/jobs/marketing",
+      "verified": true
+    }
+  ]
+}
