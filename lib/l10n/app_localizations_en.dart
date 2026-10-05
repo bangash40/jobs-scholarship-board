@@ -204,4 +204,25 @@ class AppLocalizationsEn extends AppLocalizations {
   ) {
     return '$title — $organization\nLast date: $date\nOfficial link: $url';
   }
+
+  @override
+  String get reportButton => 'Report suspicious listing';
+
+  @override
+  String get reportTitle => 'Why are you reporting this?';
+
+  @override
+  String get reasonFee => 'Asks for a fee or payment';
+
+  @override
+  String get reasonFake => 'Looks fake or a scam';
+
+  @override
+  String get reasonExpired => 'Deadline is wrong or expired';
+
+  @override
+  String get reasonLink => 'Link is broken or wrong';
+
+  @override
+  String get reasonOther => 'Something else';
 }

@@ -208,4 +208,25 @@ class AppLocalizationsUr extends AppLocalizations {
   ) {
     return '$title — $organization\nآخری تاریخ: $date\nسرکاری لنک: $url';
   }
+
+  @override
+  String get reportButton => 'مشکوک اندراج کی اطلاع دیں';
+
+  @override
+  String get reportTitle => 'آپ اس کی اطلاع کیوں دے رہے ہیں؟';
+
+  @override
+  String get reasonFee => 'فیس یا رقم مانگی جا رہی ہے';
+
+  @override
+  String get reasonFake => 'جعلی یا فراڈ لگتا ہے';
+
+  @override
+  String get reasonExpired => 'آخری تاریخ غلط یا گزر چکی ہے';
+
+  @override
+  String get reasonLink => 'لنک خراب یا غلط ہے';
+
+  @override
+  String get reasonOther => 'کوئی اور وجہ';
 }

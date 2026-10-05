@@ -420,6 +420,48 @@ abstract class AppLocalizations {
     String date,
     String url,
   );
+
+  /// No description provided for @reportButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Report suspicious listing'**
+  String get reportButton;
+
+  /// No description provided for @reportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Why are you reporting this?'**
+  String get reportTitle;
+
+  /// No description provided for @reasonFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Asks for a fee or payment'**
+  String get reasonFee;
+
+  /// No description provided for @reasonFake.
+  ///
+  /// In en, this message translates to:
+  /// **'Looks fake or a scam'**
+  String get reasonFake;
+
+  /// No description provided for @reasonExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Deadline is wrong or expired'**
+  String get reasonExpired;
+
+  /// No description provided for @reasonLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Link is broken or wrong'**
+  String get reasonLink;
+
+  /// No description provided for @reasonOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Something else'**
+  String get reasonOther;
 }
 
 class _AppLocalizationsDelegate

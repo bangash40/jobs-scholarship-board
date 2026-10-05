@@ -103,5 +103,12 @@
         "type": "String"
       }
     }
-  }
+  },
+  "reportButton": "Report suspicious listing",
+  "reportTitle": "Why are you reporting this?",
+  "reasonFee": "Asks for a fee or payment",
+  "reasonFake": "Looks fake or a scam",
+  "reasonExpired": "Deadline is wrong or expired",
+  "reasonLink": "Link is broken or wrong",
+  "reasonOther": "Something else"
 }

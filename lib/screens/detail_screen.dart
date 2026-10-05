@@ -4,9 +4,11 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n/l10n_helpers.dart';
 import '../models/listing.dart';
+import '../services/report_service.dart';
 import '../services/saved_controller.dart';
 import '../theme/app_theme.dart';
 import '../widgets/listing_card.dart';
+import '../widgets/report_sheet.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({super.key, required this.listing, required this.saved});
@@ -42,6 +44,20 @@ class DetailScreen extends StatelessWidget {
     if (!ok && context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(l.couldNotOpenLink)),
+      );
+    }
+  }
+
+  Future<void> _report(BuildContext context) async {
+    final reason = await showReportSheet(context);
+    if (reason == null || !context.mounted) return;
+    final ok = await launchUrl(
+      reportUri(listing, reason),
+      mode: LaunchMode.externalApplication,
+    );
+    if (!ok && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.l10n.couldNotOpenLink)),
       );
     }
   }
@@ -257,6 +273,17 @@ class DetailScreen extends StatelessWidget {
                         ),
                       ),
                     ],
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Center(
+                  child: TextButton.icon(
+                    onPressed: () => _report(context),
+                    icon: const Icon(Icons.flag_outlined, size: 18),
+                    label: Text(context.l10n.reportButton),
+                    style: TextButton.styleFrom(
+                      foregroundColor: AppColors.muted,
+                    ),
                   ),
                 ),
               ],
