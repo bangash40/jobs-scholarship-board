@@ -85,5 +85,23 @@
   "safetyTip3": "Be careful of offers that arrive on WhatsApp or ask for money via EasyPaisa or JazzCash.",
   "safetyTip4": "Always check the last date on the official website before applying.",
   "moreAboutTitle": "About",
-  "moreAboutBody": "Every listing links to an official source and is checked by a person before it appears. Expired listings are removed automatically."
+  "moreAboutBody": "Every listing links to an official source and is checked by a person before it appears. Expired listings are removed automatically.",
+  "tooltipShare": "Share on WhatsApp",
+  "shareMessage": "{title} — {organization}\nLast date: {date}\nOfficial link: {url}",
+  "@shareMessage": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "organization": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "url": {
+        "type": "String"
+      }
+    }
+  }
 }

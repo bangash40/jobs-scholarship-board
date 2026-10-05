@@ -191,4 +191,17 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get moreAboutBody =>
       'Every listing links to an official source and is checked by a person before it appears. Expired listings are removed automatically.';
+
+  @override
+  String get tooltipShare => 'Share on WhatsApp';
+
+  @override
+  String shareMessage(
+    String title,
+    String organization,
+    String date,
+    String url,
+  ) {
+    return '$title — $organization\nLast date: $date\nOfficial link: $url';
+  }
 }

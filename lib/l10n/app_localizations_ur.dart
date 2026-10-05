@@ -195,4 +195,17 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get moreAboutBody =>
       'ہر اندراج سرکاری ذریعے سے منسلک ہے اور ظاہر ہونے سے پہلے کسی شخص کی جانچ سے گزرتا ہے۔ ختم شدہ اندراجات خود بخود ہٹ جاتے ہیں۔';
+
+  @override
+  String get tooltipShare => 'واٹس ایپ پر شیئر کریں';
+
+  @override
+  String shareMessage(
+    String title,
+    String organization,
+    String date,
+    String url,
+  ) {
+    return '$title — $organization\nآخری تاریخ: $date\nسرکاری لنک: $url';
+  }
 }

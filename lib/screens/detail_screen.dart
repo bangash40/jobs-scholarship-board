@@ -27,6 +27,25 @@ class DetailScreen extends StatelessWidget {
     messenger.showSnackBar(SnackBar(content: Text(msg)));
   }
 
+  Future<void> _share(BuildContext context) async {
+    final l = context.l10n;
+    final text = l.shareMessage(
+      listing.title,
+      listing.organization,
+      context.formatDate(listing.lastDate, DateFormat.yMMMd),
+      listing.sourceUrl,
+    );
+    final ok = await launchUrl(
+      Uri.https('wa.me', '/', {'text': text}),
+      mode: LaunchMode.externalApplication,
+    );
+    if (!ok && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l.couldNotOpenLink)),
+      );
+    }
+  }
+
   Future<void> _openSource(BuildContext context) async {
     final ok = await launchUrl(
       Uri.parse(listing.sourceUrl),
@@ -66,6 +85,11 @@ class DetailScreen extends StatelessWidget {
                             ? Icons.notifications_active
                             : Icons.notifications_none,
                       ),
+                    ),
+                    IconButton(
+                      tooltip: context.l10n.tooltipShare,
+                      onPressed: () => _share(context),
+                      icon: const Icon(Icons.share),
                     ),
                     IconButton(
                       tooltip: context.l10n.tooltipSave,

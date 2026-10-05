@@ -403,6 +403,23 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Every listing links to an official source and is checked by a person before it appears. Expired listings are removed automatically.'**
   String get moreAboutBody;
+
+  /// No description provided for @tooltipShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share on WhatsApp'**
+  String get tooltipShare;
+
+  /// No description provided for @shareMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'{title} — {organization}\nLast date: {date}\nOfficial link: {url}'**
+  String shareMessage(
+    String title,
+    String organization,
+    String date,
+    String url,
+  );
 }
 
 class _AppLocalizationsDelegate
