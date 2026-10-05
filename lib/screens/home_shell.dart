@@ -5,6 +5,7 @@ import '../services/feed_repository.dart';
 import '../services/locale_controller.dart';
 import '../services/saved_controller.dart';
 import 'feed_screen.dart';
+import 'more_screen.dart';
 import 'saved_screen.dart';
 
 /// Bottom navigation: Feed and My deadlines.
@@ -57,6 +58,7 @@ class _HomeShellState extends State<HomeShell> {
             locale: widget.locale,
           ),
           SavedScreen(repository: widget.repository, saved: widget.saved),
+          MoreScreen(locale: widget.locale),
         ],
       ),
       bottomNavigationBar: ListenableBuilder(
@@ -78,6 +80,10 @@ class _HomeShellState extends State<HomeShell> {
               ),
               selectedIcon: const Icon(Icons.bookmark),
               label: context.l10n.navMyDeadlines,
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.more_horiz),
+              label: context.l10n.navMore,
             ),
           ],
         ),
