@@ -71,3 +71,8 @@ key.properties
 serviceAccount*.json
 *-adminsdk-*.json
 secrets.json
+
+# Scraper
+scraper/public/
+scraper/__pycache__/
+scraper/.pytest_cache/

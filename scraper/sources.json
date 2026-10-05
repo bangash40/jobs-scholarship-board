@@ -1,0 +1,21 @@
+[
+  {
+    "id": "hec-scholarships",
+    "name": "Higher Education Commission",
+    "type": "scholarship",
+    "kind": "cards",
+    "url": "https://www.hec.gov.pk/english/scholarshipsgrants/Pages/default.aspx",
+    "item": "li.card-info-listing",
+    "title": ".desc",
+    "enabled": true
+  },
+  {
+    "id": "ppsc-jobs",
+    "name": "Punjab Public Service Commission",
+    "type": "govt_job",
+    "kind": "links",
+    "url": "https://www.ppsc.gop.pk/Jobs.aspx",
+    "hrefPattern": "Adds/",
+    "enabled": true
+  }
+]
