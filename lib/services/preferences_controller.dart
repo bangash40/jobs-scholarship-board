@@ -2,16 +2,21 @@ import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/listing.dart';
+import 'reminder_service.dart';
 
 /// The user's optional interests, used to build the "For you" view.
 /// Stored on the device only.
 class PreferencesController extends ChangeNotifier {
+  PreferencesController(this._reminders);
+
+  final ReminderService _reminders;
   late final Box<String> _box;
 
   Set<String> _types = {};
   String? _city;
   String? _education;
   bool _onboarded = false;
+  List<int> _reminderDays = ReminderService.allDays;
 
   /// Main cities offered in the setup. Match the `city` values in the feed.
   static const cities = [
@@ -32,6 +37,7 @@ class PreferencesController extends ChangeNotifier {
   String? get city => _city;
   String? get education => _education;
   bool get onboarded => _onboarded;
+  List<int> get reminderDays => _reminderDays;
   bool get hasInterests =>
       _types.isNotEmpty || _city != null || _education != null;
 
@@ -42,6 +48,24 @@ class PreferencesController extends ChangeNotifier {
     _types = types.isEmpty ? {} : types.split(',').toSet();
     _city = _nonEmpty(_box.get('interestCity'));
     _education = _nonEmpty(_box.get('interestEducation'));
+    final days = (_box.get('reminderDays') ?? '')
+        .split(',')
+        .map(int.tryParse)
+        .whereType<int>()
+        .where(ReminderService.allDays.contains)
+        .toList();
+    _reminderDays = days.isEmpty ? ReminderService.allDays : days;
+    _reminders.activeDays = _reminderDays;
+  }
+
+  /// Chooses which days before the deadline to alert at. At least one stays on.
+  Future<void> setReminderDays(Iterable<int> days) async {
+    final chosen = ReminderService.allDays.where(days.contains).toList();
+    if (chosen.isEmpty) return;
+    _reminderDays = chosen;
+    _reminders.activeDays = chosen;
+    await _box.put('reminderDays', chosen.join(','));
+    notifyListeners();
   }
 
   String? _nonEmpty(String? v) => (v == null || v.isEmpty) ? null : v;

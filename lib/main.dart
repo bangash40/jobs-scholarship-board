@@ -21,7 +21,7 @@ Future<void> main() async {
   await saved.init();
   final locale = LocaleController(reminders);
   await locale.init();
-  final prefs = PreferencesController();
+  final prefs = PreferencesController(reminders);
   await prefs.init();
   runApp(
     MainApp(repository: repository, saved: saved, locale: locale, prefs: prefs),

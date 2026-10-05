@@ -63,7 +63,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get savedSubtitle =>
-      'Saved listings, soonest first. Tap the bell on a listing to get alerts 7, 2 and 1 days before it closes.';
+      'Saved listings, soonest first. Tap the bell on a listing to get alerts before it closes.';
 
   @override
   String get savedEmpty =>
@@ -265,4 +265,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eduMaster => 'Master\'s';
+
+  @override
+  String get moreReminderDays => 'Reminder days';
+
+  @override
+  String get moreReminderHint => 'Alert me before a saved listing closes';
+
+  @override
+  String reminderDayChip(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days before',
+      one: '1 day before',
+    );
+    return '$_temp0';
+  }
 }

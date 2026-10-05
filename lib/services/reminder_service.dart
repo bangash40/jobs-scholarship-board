@@ -8,8 +8,12 @@ import '../models/listing.dart';
 
 /// Schedules on-device deadline alerts (no server needed).
 class ReminderService {
-  /// Days before the last date at which an alert fires.
-  static const thresholds = [7, 2, 1];
+  /// Every day-offset the app can alert at. Notification ids are derived from
+  /// a day's position here, so this list must never be reordered.
+  static const allDays = [7, 2, 1];
+
+  /// The days the user has chosen to be alerted at (a subset of [allDays]).
+  List<int> activeDays = allDays;
 
   /// Local time of day the alerts fire.
   static const _alertHour = 9;
@@ -48,14 +52,14 @@ class ReminderService {
   }
 
   int _id(String listingId, int index) =>
-      (listingId.hashCode.abs() % 100000000) * thresholds.length + index;
+      (listingId.hashCode.abs() % 100000000) * allDays.length + index;
 
   /// Dates the alerts would fire for [l], skipping any already in the past.
   List<(int index, tz.TZDateTime at)> upcoming(Listing l) {
     final now = tz.TZDateTime.now(tz.local);
     final out = <(int, tz.TZDateTime)>[];
-    for (var i = 0; i < thresholds.length; i++) {
-      final day = l.lastDate.subtract(Duration(days: thresholds[i]));
+    for (final days in activeDays) {
+      final day = l.lastDate.subtract(Duration(days: days));
       final when = tz.TZDateTime(
         tz.local,
         day.year,
@@ -63,7 +67,7 @@ class ReminderService {
         day.day,
         _alertHour,
       );
-      if (when.isAfter(now)) out.add((i, when));
+      if (when.isAfter(now)) out.add((allDays.indexOf(days), when));
     }
     return out;
   }
@@ -74,7 +78,7 @@ class ReminderService {
     await cancel(l);
     final times = upcoming(l);
     for (final (i, at) in times) {
-      final days = thresholds[i];
+      final days = allDays[i];
       await _plugin.zonedSchedule(
         id: _id(l.id, i),
         title: titleFor(days),
@@ -99,7 +103,7 @@ class ReminderService {
 
   Future<void> cancelById(String listingId) async {
     if (!_ready) return;
-    for (var i = 0; i < thresholds.length; i++) {
+    for (var i = 0; i < allDays.length; i++) {
       await _plugin.cancel(id: _id(listingId, i));
     }
   }

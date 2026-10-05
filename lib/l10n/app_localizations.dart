@@ -197,7 +197,7 @@ abstract class AppLocalizations {
   /// No description provided for @savedSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Saved listings, soonest first. Tap the bell on a listing to get alerts 7, 2 and 1 days before it closes.'**
+  /// **'Saved listings, soonest first. Tap the bell on a listing to get alerts before it closes.'**
   String get savedSubtitle;
 
   /// No description provided for @savedEmpty.
@@ -540,6 +540,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Master\'s'**
   String get eduMaster;
+
+  /// No description provided for @moreReminderDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder days'**
+  String get moreReminderDays;
+
+  /// No description provided for @moreReminderHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert me before a saved listing closes'**
+  String get moreReminderHint;
+
+  /// No description provided for @reminderDayChip.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day before} other{{count} days before}}'**
+  String reminderDayChip(int count);
 }
 
 class _AppLocalizationsDelegate

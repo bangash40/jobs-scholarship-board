@@ -65,7 +65,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get savedSubtitle =>
-      'محفوظ کردہ اندراجات، قریب ترین آخری تاریخ پہلے۔ بند ہونے سے 7، 2 اور 1 دن پہلے یاد دہانی کے لیے کسی اندراج پر گھنٹی دبائیں۔';
+      'محفوظ کردہ اندراجات، قریب ترین آخری تاریخ پہلے۔ بند ہونے سے پہلے یاد دہانی کے لیے کسی اندراج پر گھنٹی دبائیں۔';
 
   @override
   String get savedEmpty =>
@@ -269,4 +269,22 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get eduMaster => 'ماسٹرز';
+
+  @override
+  String get moreReminderDays => 'یاد دہانی کے دن';
+
+  @override
+  String get moreReminderHint =>
+      'محفوظ کردہ اندراج بند ہونے سے پہلے مجھے بتائیں';
+
+  @override
+  String reminderDayChip(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count دن پہلے',
+      one: '1 دن پہلے',
+    );
+    return '$_temp0';
+  }
 }

@@ -35,12 +35,14 @@ class _HomeShellState extends State<HomeShell> {
   void initState() {
     super.initState();
     widget.repository.current.addListener(_onFeed);
+    widget.prefs.addListener(_onFeed); // reschedule when reminder days change
     _onFeed();
   }
 
   @override
   void dispose() {
     widget.repository.current.removeListener(_onFeed);
+    widget.prefs.removeListener(_onFeed);
     super.dispose();
   }
 
