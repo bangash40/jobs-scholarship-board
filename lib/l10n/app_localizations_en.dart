@@ -144,4 +144,51 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notifLastDay => 'Last day tomorrow';
+
+  @override
+  String get filtersTitle => 'Filters';
+
+  @override
+  String get filterCity => 'City';
+
+  @override
+  String get filterAny => 'Any';
+
+  @override
+  String get filterReset => 'Reset';
+
+  @override
+  String get filterApply => 'Show results';
+
+  @override
+  String get navMore => 'More';
+
+  @override
+  String get moreLanguage => 'Language';
+
+  @override
+  String get moreSafetyTitle => 'Stay safe from scams';
+
+  @override
+  String get safetyTip1 =>
+      'Genuine employers and scholarships never ask you to pay to apply.';
+
+  @override
+  String get safetyTip2 =>
+      'Apply only through the official link shown on each listing.';
+
+  @override
+  String get safetyTip3 =>
+      'Be careful of offers that arrive on WhatsApp or ask for money via EasyPaisa or JazzCash.';
+
+  @override
+  String get safetyTip4 =>
+      'Always check the last date on the official website before applying.';
+
+  @override
+  String get moreAboutTitle => 'About';
+
+  @override
+  String get moreAboutBody =>
+      'Every listing links to an official source and is checked by a person before it appears. Expired listings are removed automatically.';
 }

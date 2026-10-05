@@ -148,4 +148,51 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get notifLastDay => 'کل آخری دن ہے';
+
+  @override
+  String get filtersTitle => 'فلٹرز';
+
+  @override
+  String get filterCity => 'شہر';
+
+  @override
+  String get filterAny => 'کوئی بھی';
+
+  @override
+  String get filterReset => 'ری سیٹ';
+
+  @override
+  String get filterApply => 'نتائج دکھائیں';
+
+  @override
+  String get navMore => 'مزید';
+
+  @override
+  String get moreLanguage => 'زبان';
+
+  @override
+  String get moreSafetyTitle => 'فراڈ سے محفوظ رہیں';
+
+  @override
+  String get safetyTip1 =>
+      'اصل ادارے اور وظائف درخواست دینے کے لیے رقم کا مطالبہ کبھی نہیں کرتے۔';
+
+  @override
+  String get safetyTip2 =>
+      'صرف ہر اندراج پر دیے گئے سرکاری لنک سے درخواست دیں۔';
+
+  @override
+  String get safetyTip3 =>
+      'واٹس ایپ پر آنے والی پیشکشوں یا ایزی پیسہ/جاز کیش کے ذریعے رقم مانگنے والوں سے ہوشیار رہیں۔';
+
+  @override
+  String get safetyTip4 =>
+      'درخواست سے پہلے سرکاری ویب سائٹ پر آخری تاریخ ضرور دیکھ لیں۔';
+
+  @override
+  String get moreAboutTitle => 'ہمارے بارے میں';
+
+  @override
+  String get moreAboutBody =>
+      'ہر اندراج سرکاری ذریعے سے منسلک ہے اور ظاہر ہونے سے پہلے کسی شخص کی جانچ سے گزرتا ہے۔ ختم شدہ اندراجات خود بخود ہٹ جاتے ہیں۔';
 }

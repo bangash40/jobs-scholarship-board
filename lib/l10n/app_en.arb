@@ -3,7 +3,13 @@
   "appTitle": "Jobs & Scholarships",
   "headerTitle": "Verified Opportunities",
   "openNow": "{count} open now · Jobs, scholarships & internships",
-  "@openNow": { "placeholders": { "count": { "type": "int" } } },
+  "@openNow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "searchHint": "Search title or organization",
   "filterAll": "All",
   "filterClosingSoon": "Closing soon",
@@ -15,14 +21,26 @@
   "loadError": "Could not load listings. Pull down to retry.",
   "offlineNotice": "Offline — showing last synced listings.",
   "lastUpdated": "Last updated {date}",
-  "@lastUpdated": { "placeholders": { "date": { "type": "String" } } },
+  "@lastUpdated": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "navFeed": "Feed",
   "navMyDeadlines": "My deadlines",
   "savedSubtitle": "Saved listings, soonest first. Tap the bell on a listing to get alerts 7, 2 and 1 days before it closes.",
   "savedEmpty": "Nothing saved yet.\nTap the bookmark on any listing to track its deadline.",
   "verified": "Verified",
   "daysLeft": "{count, plural, =0{Closes today} =1{1 day left} other{{count} days left}}",
-  "@daysLeft": { "placeholders": { "count": { "type": "int" } } },
+  "@daysLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "lastDateToApply": "Last date to apply",
   "location": "Location",
   "field": "Field",
@@ -36,10 +54,36 @@
   "tooltipSave": "Save",
   "remindersOff": "Reminders turned off",
   "remindersSet": "{count, plural, =1{1 reminder set (9:00 am)} other{{count} reminders set (9:00 am)}}",
-  "@remindersSet": { "placeholders": { "count": { "type": "int" } } },
+  "@remindersSet": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "remindersNone": "No reminders to set — the deadline is too close",
   "languageToggle": "اردو",
   "notifClosingIn": "Closing in {days} days",
-  "@notifClosingIn": { "placeholders": { "days": { "type": "int" } } },
-  "notifLastDay": "Last day tomorrow"
+  "@notifClosingIn": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "notifLastDay": "Last day tomorrow",
+  "filtersTitle": "Filters",
+  "filterCity": "City",
+  "filterAny": "Any",
+  "filterReset": "Reset",
+  "filterApply": "Show results",
+  "navMore": "More",
+  "moreLanguage": "Language",
+  "moreSafetyTitle": "Stay safe from scams",
+  "safetyTip1": "Genuine employers and scholarships never ask you to pay to apply.",
+  "safetyTip2": "Apply only through the official link shown on each listing.",
+  "safetyTip3": "Be careful of offers that arrive on WhatsApp or ask for money via EasyPaisa or JazzCash.",
+  "safetyTip4": "Always check the last date on the official website before applying.",
+  "moreAboutTitle": "About",
+  "moreAboutBody": "Every listing links to an official source and is checked by a person before it appears. Expired listings are removed automatically."
 }

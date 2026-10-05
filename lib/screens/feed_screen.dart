@@ -7,6 +7,7 @@ import '../services/feed_repository.dart';
 import '../services/locale_controller.dart';
 import '../services/saved_controller.dart';
 import '../theme/app_theme.dart';
+import '../widgets/filter_sheet.dart';
 import '../widgets/listing_card.dart';
 import 'detail_screen.dart';
 
@@ -34,6 +35,7 @@ class _FeedScreenState extends State<FeedScreen> {
   bool _failed = false;
   ListingType? _type;
   bool _closingSoon = false;
+  FeedFilters _filters = FeedFilters.none;
   String _query = '';
 
   @override
@@ -67,6 +69,7 @@ class _FeedScreenState extends State<FeedScreen> {
       if (l.isExpired(now)) return false;
       if (_type != null && l.type != _type) return false;
       if (_closingSoon && l.daysLeft(now) > _closingSoonDays) return false;
+      if (!_filters.matches(l)) return false;
       if (q.isNotEmpty &&
           !l.title.toLowerCase().contains(q) &&
           !l.organization.toLowerCase().contains(q)) {
@@ -106,6 +109,7 @@ class _FeedScreenState extends State<FeedScreen> {
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 16),
               children: [
+                _filterButton(l.filtersTitle),
                 _chip(l.filterAll, null, _type == null, () => setState(() => _type = null)),
                 for (final t in ListingType.values)
                   _chip(t.label(l), t, _type == t, () => setState(() => _type = t)),
@@ -192,6 +196,32 @@ class _FeedScreenState extends State<FeedScreen> {
               ),
             ),
         ],
+      ),
+    );
+  }
+
+  Widget _filterButton(String label) {
+    final count = _filters.activeCount;
+    return Padding(
+      padding: const EdgeInsets.only(right: 8),
+      child: Center(
+        child: ActionChip(
+          avatar: Badge(
+            isLabelVisible: count > 0,
+            label: Text('$count'),
+            child: const Icon(Icons.tune, size: 18),
+          ),
+          label: Text(label),
+          labelStyle: const TextStyle(fontWeight: FontWeight.w600),
+          onPressed: () async {
+            final result = await showFilterSheet(
+              context,
+              listings: _feed?.listings ?? const [],
+              current: _filters,
+            );
+            if (result != null) setState(() => _filters = result);
+          },
+        ),
       ),
     );
   }

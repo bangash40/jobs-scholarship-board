@@ -319,6 +319,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Last day tomorrow'**
   String get notifLastDay;
+
+  /// No description provided for @filtersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get filtersTitle;
+
+  /// No description provided for @filterCity.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get filterCity;
+
+  /// No description provided for @filterAny.
+  ///
+  /// In en, this message translates to:
+  /// **'Any'**
+  String get filterAny;
+
+  /// No description provided for @filterReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get filterReset;
+
+  /// No description provided for @filterApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Show results'**
+  String get filterApply;
+
+  /// No description provided for @navMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get navMore;
+
+  /// No description provided for @moreLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get moreLanguage;
+
+  /// No description provided for @moreSafetyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay safe from scams'**
+  String get moreSafetyTitle;
+
+  /// No description provided for @safetyTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Genuine employers and scholarships never ask you to pay to apply.'**
+  String get safetyTip1;
+
+  /// No description provided for @safetyTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply only through the official link shown on each listing.'**
+  String get safetyTip2;
+
+  /// No description provided for @safetyTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'Be careful of offers that arrive on WhatsApp or ask for money via EasyPaisa or JazzCash.'**
+  String get safetyTip3;
+
+  /// No description provided for @safetyTip4.
+  ///
+  /// In en, this message translates to:
+  /// **'Always check the last date on the official website before applying.'**
+  String get safetyTip4;
+
+  /// No description provided for @moreAboutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get moreAboutTitle;
+
+  /// No description provided for @moreAboutBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Every listing links to an official source and is checked by a person before it appears. Expired listings are removed automatically.'**
+  String get moreAboutBody;
 }
 
 class _AppLocalizationsDelegate
