@@ -17,6 +17,11 @@ class ReminderService {
   final _plugin = FlutterLocalNotificationsPlugin();
   bool _ready = false;
 
+  /// Builds the notification title for an alert [days] before closing.
+  /// Set by LocaleController so alerts follow the app language.
+  String Function(int days) titleFor = (days) =>
+      days == 1 ? 'Last day tomorrow' : 'Closing in $days days';
+
   bool get supported => defaultTargetPlatform == TargetPlatform.android;
 
   Future<void> init() async {
@@ -72,7 +77,7 @@ class ReminderService {
       final days = thresholds[i];
       await _plugin.zonedSchedule(
         id: _id(l.id, i),
-        title: days == 1 ? 'Last day tomorrow' : 'Closing in $days days',
+        title: titleFor(days),
         body: '${l.title} · ${l.organization}',
         scheduledDate: at,
         notificationDetails: const NotificationDetails(
